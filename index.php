@@ -52,90 +52,203 @@ $query_produkte->execute();
 $query_photo = $db->prepare(SQL_PHOT_SEL);
 $produkte = $query_produkte->fetchAll(PDO::FETCH_CLASS);
 ?>
+<!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <style type="text/css">
-        <!--
-        .products {
-            border-spacing: 0;
-        }
-        .products td, .products td {
-            border-left: solid #000 thin;
-            border-top: solid #000 thin;
-            margin: 0;
-        }
-        tr td:first-child { border-left: none; }
-        thead tr:first-child td { border-top: none; }
-        thead td {
-            font-weight: bold;
-        }
-        .products > thead > tr > td, .products > tbody > tr > td {
-            padding: 15px;
-        }
-        .preview {
-            display: inline-table;
-            max-height: 100px;
-            max-width: 150px;
-        }
-        .preview:active {
-            max-height: 80%;
-            max-width: 80%;
-            position: absolute;
-            top: 10%;
-            left: 10%;
-        }
-        -->
-    </style>
+    <title>OnlineShop</title>
+
+    <meta charset="ISO-8859-1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <link href="style.css" type="text/css" rel="stylesheet" />
+
 </head>
+
 <body>
-<a href="./">Zurück</a>
-<form action="index.php" method="post">
-    <p>Artikel:</p><input type="text" name="artbes" />
-    <input type="submit" />
-</form>
-<table class="products">
-    <thead>
-        <tr>
-            <td>&nbsp;</td>
-            <td>Produkt</td>
-            <td>Beschreibung</td>
-            <td>Preis</td>
-        </tr>
-    </thead>
-    <tbody><?php foreach ($produkte as $produkt) { ?>
-        <tr>
-            <td>
-                <?php
-                    $query_photo->execute(array($produkt->ProduktID));
-                    $photos = $query_photo->fetchAll(PDO::FETCH_CLASS);
-                    foreach ($photos as $photo) {
-                ?>
-                <img src="<?php echo $photo->URI; ?>" title="<?php echo htmlentities($photo->Beschreibung); ?>" class="preview" />
-                <?php } ?>
-            </td>
-            <td><a href="./?artikel=<?php echo $produkt->ProduktID ?>"><?php echo $produkt->Name; ?></a></td>
-            <td><?php
-                echo $produkt->Beschreibung;
-                if (isset($query_bauteile)) {?>
-                    <table>
-                        <thead>
+<table align="center">
+    <tr>
+        <td>
+            <div id="root_site">
+                <div id="head_main_container">
+                    <div class="header_background">
+                        <table>
+                            <tr>
+                                <td>OnlineShop <br />BWL2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="navi_main_container" >
+                    <div class="navi_container">
+                        <ul id="navigation_main">
+                            <li class="startseite"><a href=""> &Uuml;ber uns </a>
+                                <ul class="dropdown_navi">
+                                    <li><a href="">News</a></li>
+                                    <li><a href="">Wetter</a></li>
+                                    <li><a href="">Dowland</a></li>
+                                </ul>
+                            </li>
+                            <li class="termine"><a href="">Angebote</a>
+                                <ul class="dropdown_navi">
+                                    <li><a href="">tour</a></li>
+                                    <li><a href="">Wann</a></li>
+                                    <li><a href="">Wo</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="uber"><a href="">Jobs</a>
+                                <ul class="dropdown_navi">
+                                    <li><a href="">Ausildung</a></li>
+                                    <li><a href="">Volzeit</a></li>
+                                    <li><a href="">Aushilfe</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div id="content_main_container" >
+                    <div class="content_left_main">
+                        <table class="content_left_table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+
+                                    <table class="news_box">
+                                        <tr>
+                                            <td class="content_table_headline" colspan="2" >Artikel Tabelle
+                                                <a href="./">Zurück</a>
+                                                <table class="products">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td>Produkt</td>
+                                                        <td>Beschreibung</td>
+                                                        <td>Preis</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody><?php foreach ($produkte as $produkt) { ?>
+                                                        <tr>
+                                                            <td>
+                                                                <?php
+                                                                $query_photo->execute(array($produkt->ProduktID));
+                                                                $photos = $query_photo->fetchAll(PDO::FETCH_CLASS);
+                                                                foreach ($photos as $photo) {
+                                                                    ?>
+                                                                    <img src="<?php echo $photo->URI; ?>" title="<?php echo htmlentities($photo->Beschreibung); ?>" class="preview" />
+                                                                <?php } ?>
+                                                            </td>
+                                                            <td><a href="./?artikel=<?php echo $produkt->ProduktID ?>"><?php echo $produkt->Name; ?></a></td>
+                                                            <td><?php
+                                                                echo $produkt->Beschreibung;
+                                                                if (isset($query_bauteile)) {?>
+                                                                    <table>
+                                                                        <thead>
+                                                                        <tr>
+                                                                            <td>Menge</td>
+                                                                            <td>Name</td>
+                                                                        </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <?php
+                                                                        $query_bauteile->execute(array($produkt->BauteilID));
+                                                                        showBauteile($query_bauteile);
+                                                                        ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                <?php }/*endif*/ ?></td>
+                                                            <td><?php echo $produkt->Preis; ?>€</td>
+                                                        </tr>
+                                                    <?php } ?></tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50"> </td>
+                                            <td> </td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                    <table class="news_box">
+                                        <tr>
+                                            <td class="content_table_headline" colspan="2" >News</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+
+                                                <p>Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.</p>
+
+                                                <p>Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,</p>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td ></td>
+                                            <td></td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="content_right_main">
+                        <table class="content_right_table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td class="content_table_headline">Suchen  </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form action="index.php" method="post">
+                                        <p>Artikel:</p><input type="text" name="artbes" />
+                                        <input type="submit" />
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div id="footer_main_container" ></div>
+                <div id="footer_container">
+                    <table class="footer_table_setup" align="center" border="0">
                         <tr>
-                            <td>Menge</td>
-                            <td>Name</td>
+                            <td></td>
+                            <td rowspan="5"><a href="https://www.facebook.com/" target="_blank"><img src="images/logo.gif"/> </a> </td>
+                            <td></td>
                         </tr>
-                        </thead>
-                        <tbody>
-                    <?php
-                        $query_bauteile->execute(array($produkt->BauteilID));
-                        showBauteile($query_bauteile);
-                    ?>
-                        </tbody>
+
+                        <tr>
+                            <td><a href="">Impressum</a></td>
+                            <td><a href="">Kontakt</a></td>
+                        </tr>
+
+
+                        <tr>
+                            <td><a href="">Datenschutz</a></td>
+                            <td><a href=""> Links</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="">FAQ</a></td>
+                            <td><a href="">Partnerschaft</a></td>
+                        </tr>
+
                     </table>
-                <?php }/*endif*/ ?></td>
-            <td><?php echo $produkt->Preis; ?>€</td>
-        </tr>
-    <?php } ?></tbody>
+                </div>
+            </div>
+        </td>
+    </tr>
 </table>
+
 </body>
 </html>

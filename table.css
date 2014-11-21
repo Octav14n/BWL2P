@@ -1,0 +1,28 @@
+.products {
+    border-spacing: 0;
+}
+.products td, .products td {
+    border-left: solid #000 thin;
+    border-top: solid #000 thin;
+    margin: 0;
+}
+tr td:first-child { border-left: none; }
+thead tr:first-child td { border-top: none; }
+thead td {
+    font-weight: bold;
+}
+.products > thead > tr > td, .products > tbody > tr > td {
+    padding: 15px;
+}
+.preview {
+    display: inline-table;
+    max-height: 100px;
+    max-width: 150px;
+}
+.preview:active {
+    max-height: 80%;
+    max-width: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+}
