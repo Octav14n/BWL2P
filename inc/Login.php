@@ -16,10 +16,13 @@ class User {
     private $loginUser;
 
     private function __construct() {
+        // Versuchen den aktuellen Nutzer einzuloggen.
         $this->query_user = User::$db->prepare(SQL_USER_SEL);
         if (isset($_POST['userName']) && isset($_POST['userPass'])) {
+            // Nutzer hat sich per Formular angemeldet.
             $this->doLogin($_POST['userName'], $_POST['userPass']);
         } else if (isset($_SESSION['userName'])) {
+            // Nutzer ist per Session angemeldet.
             $this->doLogin($_SESSION['userName'], null);
         }
     }
@@ -39,6 +42,7 @@ class User {
         return static::$instance;
     }
 
+    /** Ein Nutzerobjekt erzeugen (fuer die GUI) welches keine sensiblen Daten enthaelt. */
     public function getUser() {
         if ($this->loginUser) {
             $user = new stdClass();
@@ -51,16 +55,19 @@ class User {
         }
     }
 
+    /** Gibt die KundenID zurueck oder -1 falls nicht angemeldet. */
     public function getKundeID() {
         if (!$this->loginUser)
             return -1;
         return $this->loginUser->KundeID;
     }
 
+    /** gibt TRUE zurueck, wenn der Nutzer eingeloggt ist. */
     public function isLogin() {
         return isset($this->loginUser);
     }
 
+    /** fuehre das einloggen durch. */
     private function doLogin($name, $pass) {
         $this->query_user->execute(array($name));
         if ($user = $this->query_user->fetchObject()) {

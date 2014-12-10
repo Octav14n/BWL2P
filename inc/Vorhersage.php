@@ -36,8 +36,10 @@ class Vorhersage {
         return $this->bauteils;
     }
 
+    /** Neue Vorhersage in DB einfuegen */
     public function einfuegen() {
         if ($this->zeitraum >= static::getMaxZeitraum()) {
+            // Nur Einfuegen, wenn fuer diesen Zeitraum keine Vorhersage existiert.
             $query_vorhersage = static::$db->prepare(SQL_VORHERSAGE_INSERT);
             $query_bauteil = static::$db->prepare(SQL_VORHERSAGE_BUPDATE);
             foreach ($this->bauteils as $bauteil) {

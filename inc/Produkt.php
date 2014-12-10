@@ -90,6 +90,7 @@ class Produkt {
         return static::$query_bauteile->fetchObject();
     }
 
+    /** Holt alle Produkte aus der DB und gibt diese zurueck. */
     private function selectProdukte() {
         $query_bauteile = null;
         $query_produkte = null;

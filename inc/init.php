@@ -17,7 +17,7 @@ User::init($db);
 Warenkorb::init($db);
 Produkt::init($db);
 
-
+// Twig (Template-Engine) Initialisieren.
 require_once 'vendor/autoload.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('./inc');

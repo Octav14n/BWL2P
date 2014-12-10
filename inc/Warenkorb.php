@@ -21,7 +21,7 @@ class Warenkorb {
     /** @var PDOStatement */
     private static $insert_query;
     private $warenkorb = array();
-    private $changeAble;
+    private $changeAble; // Changeable besagt ob Produkte in den Warenkorb hinzugefuegt werden duerfen.
     private $kundeID;
 
     public function __construct($id) {
@@ -50,6 +50,11 @@ class Warenkorb {
         return static::$instance;
     }
 
+    /**
+     * Fuegt das uebergebene Produkt in den Warenkorb (und die DB) hinzu.
+     * @param $produktID
+     * @param $menge
+     */
     public function addProduct($produktID, $menge) {
         assert(is_numeric($produktID) && is_numeric($menge) && $this->changeAble);
         if ($ware = $this->getWareByProduktID($produktID)) {
@@ -64,6 +69,7 @@ class Warenkorb {
         }
     }
 
+    /** Gibt den Warenkorb zurueck. */
     public function getWarenkorbArtikel() {
         $p = Produkt::getInstance();
         foreach ($this->warenkorb as $ware) {
@@ -112,6 +118,7 @@ class Warenkorb {
         return count($this->warenkorb);
     }
 
+    /** Holt den Warenkorb aus der DB. */
     private function selectWarenkorb($id) {
         $query = Warenkorb::$db->prepare(SQL_WARENKORB_SELECT);
         $this->kundeID = $id;
