@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin</title>
+        <meta charset="UTF-8" />
+    </head>
+<body>
+<b>{{ msg }}</b><br />
+Zeitraum:
+{% for i in range(1, maxZeitraum) %}
+<a href="admin.php?zeitraum={{ i }}">{{ i }}</a>&nbsp;
+{% endfor %}
+<br /><br />
+<b>Exponentielle Glättung</b>
+<table>
+    <thead>
+    <tr>
+        <td>Bauteil</td>
+        <td>Formel</td>
+        <td>Neuer Bedarf (exp)</td>
+        <td>Neuer Bedarf (avg)</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for bauteil in vorhersage %}
+    <tr>
+        <td>{{ bauteil.Name }}</td>
+        <td>{{ bauteil.Soll }} + 0.2*( {{ bauteil.Verbrauch }} - {{ bauteil.Soll }} ) = </td>
+        <td>{{ bauteil.NextSoll }}</td>
+        <td>{{ bauteil.Avg }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<form method="post" action="admin.php?zeitraum={{ zeitraum }}">
+    <input type="submit" name="expGlat" value="Eintragen in Zeitraum {{ maxZeitraum + 1 }} (exp)">
+</form>
+</body>
+</html>

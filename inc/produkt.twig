@@ -1,0 +1,38 @@
+<table class="products">
+    <thead>
+    <tr>
+        <td>&nbsp;</td>
+        <td>Produkt</td>
+        <td>Beschreibung</td>
+        <td>Preis</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for produkt in produkte %}
+    <tr>
+        <td>
+            {% for photo in produkt.Photos %}
+            <img src="{{ photo.URI }}" title="{{ photo.Beschreibung }}" class="preview" />
+            {% endfor %}
+        </td>
+        <td><a href="./?artikel={{ produkt.ProduktID }}">{{ produkt.Name }}</a></td>
+        <td>{{ produkt.Beschreibung }}
+            {% if produkt.Bauteil is defined %}
+            <table>
+                <thead>
+                <tr>
+                    <td>Menge</td>
+                    <td>Name</td>
+                </tr>
+                </thead>
+                <tbody>
+                    {{ produkt.Bauteil|raw }}
+                </tbody>
+            </table>
+            {% endif %}
+        </td>
+        <td>{{ produkt.Preis }}€<br />
+            <form action="./" method="post"><input type="hidden" name="artIDInWarenkorb" value="{{ produkt.ProduktID }}" /><input type="submit" value="Kaufen" /></form></td>
+    </tr>
+    {% endfor %}</tbody>
+</table>

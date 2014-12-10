@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>OnlineShop</title>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <link href="style.css" type="text/css" rel="stylesheet" />
+
+</head>
+
+<body>
+<table align="center">
+    <tr>
+        <td>
+            <div id="root_site">
+                <div id="head_main_container">
+                    <div class="header_background">
+                        <table>
+                            <tr>
+                                <td>OnlineShop <br />BWL2</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="navi_main_container" >
+                    <div class="navi_container">
+                        <ul id="navigation_main"></ul>
+
+                    </div>
+                </div>
+
+                <div id="content_main_container" >
+                    <div class="content_left_main">
+                        <table class="content_left_table" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+
+                                    <table class="news_box">
+                                        <tr>
+                                            <td class="content_table_headline" colspan="2" >
+                                                {% if msg is defined %}
+                                                    {{ msg|e }}<br />
+                                                {% endif %}
+                                                <a href="./">Zurück</a>&nbsp;
+                                                {% block content %}
+                                                    {% if produkte is not null %}
+                                                        Artikel Tabelle<br />
+                                                        {% include 'produkt.twig' %}
+                                                    {% else %}
+                                                        <br />
+                                                        {% for ware in warenkorb.getWarenkorbArtikel() %}
+                                                            {{ ware.Menge }}x {{ ware.ProduktName }}<br />
+                                                        {% endfor %}
+                                                        <a href="./?buy">Kaufen</a>
+                                                    {% endif %}
+                                                {% endblock %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="50"> </td>
+                                            <td> </td>
+                                        </tr>
+                                    </table>
+
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                    <div class="content_right_main">
+                        <table class="content_right_table" cellpadding="0" cellspacing="0">
+                            {% if user is null %}
+                                <tr>
+                                    <td class="content_table_headline">Login</td>
+                                </tr><tr>
+                                    <td>
+                                        <form method="post" action="./">
+                                        <p>Nutzername:</p><input name="userName" />
+                                        <p>Passwort:</p><input name="userPass" type="password" />
+                                        <input type="submit" value="Login">
+                                    </form>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td class="content_table_headline">Willkommen</td>
+                                </tr><tr>
+                                    <td>{{ user.Vorname }} {{ user.Nachname }}<br />
+                                        {{ user.Nutzername }}<br />
+                                        <a href="./?warenkorb">Warenkorb: {{ warenkorb.getCount() }}</a><br />
+                                        <a href="./?warenkorb=buy">Kaufen</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            <tr>
+                                <td class="content_table_headline">Suchen  </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <form action="index.php" method="post">
+                                        <p>Artikel:</p><input type="text" name="artbes" />
+                                        <input type="submit" />
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+                <div id="footer_main_container" ></div>
+                <div id="footer_container"></div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
