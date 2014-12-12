@@ -1,6 +1,6 @@
 <?php
 // Session Initialisieren (nutzt Cookies als Standard-Methode.)
-session_id('bwl-localhost');
+session_name('bwl-localhost');
 session_start();
 
 // SQL-Anmeldedaten stehen in der local.php

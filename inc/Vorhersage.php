@@ -1,9 +1,9 @@
 <?php
-define('SQL_VORHERSAGE_SELECT', 'SELECT b.BauteilID, IFNULL(vJetzt.Ist, vVor.Ist - b.AufLager) AS Verbrauch, vJetzt.Soll, AVG(vM.Ist) AS Avg FROM Bauteil b
+define('SQL_VORHERSAGE_SELECT', 'SELECT b.BauteilID, b.Name, IFNULL(vJetzt.Ist, vVor.Ist - b.AufLager) AS Verbrauch, vJetzt.Soll, AVG(vM.Ist) AS Avg FROM Bauteil b
   LEFT JOIN Vorhersage vVor ON vVor.BauteilID = b.BauteilID AND vVor.Zeitraum = ?
   LEFT JOIN Vorhersage vJetzt ON b.BauteilID = vJetzt.BauteilID AND vJetzt.Zeitraum = vVor.Zeitraum + 1
   LEFT JOIN Vorhersage vM ON vM.BauteilID = b.BauteilID
-  GROUP BY vM.BauteilID, vVor.Ist, b.AufLager, vJetzt.Soll, vVor.Zeitraum, vJetzt.Zeitraum');
+  GROUP BY vM.BauteilID, b.BauteilID, b.Name, vVor.Ist, b.AufLager, vJetzt.Soll, vVor.Zeitraum, vJetzt.Zeitraum');
 define('SQL_VORHERSAGE_MAX', 'SELECT MAX(Zeitraum) FROM Vorhersage');
 define('SQL_VORHERSAGE_INSERT', 'INSERT INTO Vorhersage (BauteilID, Soll, Ist, Zeitraum) VALUES (?, ?, ?, ?)');
 define('SQL_VORHERSAGE_BUPDATE', 'UPDATE Bauteil SET AufLager = ? WHERE BauteilID = ?');
