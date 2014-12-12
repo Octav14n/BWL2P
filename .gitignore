@@ -3,4 +3,4 @@ local.php
 .settings/
 ZendSkeletonApplication/
 .project
-
+composer.*

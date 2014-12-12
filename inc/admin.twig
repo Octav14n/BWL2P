@@ -3,6 +3,18 @@
     <head>
         <title>Admin</title>
         <meta charset="UTF-8" />
+        <style type="text/css">
+            td {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+            thead {
+                font-weight: bold;
+            }
+            td:last-child {
+                text-align: right;
+            }
+        </style>
     </head>
 <body>
 <b>{{ msg }}</b><br />
@@ -12,7 +24,7 @@ Zeitraum:
 {% endfor %}
 <br /><br />
 <b>Exponentielle Glättung</b>
-<table>
+<table id="exp">
     <thead>
     <tr>
         <td>Bauteil</td>
@@ -35,5 +47,22 @@ Zeitraum:
 <form method="post" action="admin.php?zeitraum={{ zeitraum }}">
     <input type="submit" name="expGlat" value="Eintragen in Zeitraum {{ maxZeitraum + 1 }} (exp)">
 </form>
+<hr />
+<table id="asso">
+    <thead>
+    <tr>
+        <td>Bauteile</td>
+        <td>Confidence</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for asso in assos %}
+        <tr>
+            <td>{{ asso.Name1 }} --> {{ asso.Name2 }}</td>
+            <td>{{ asso.confidence * 100 }}%</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 </body>
 </html>

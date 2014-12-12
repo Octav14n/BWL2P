@@ -1,7 +1,9 @@
 <?php
 require_once 'inc/init.php';
 require_once 'inc/Vorhersage.php';
+require_once 'inc/Assoziation.php';
 Vorhersage::init($db);
+Assoziation::init($db);
 
 // Maximalen Zeitraum bestimmen der fuer den Vorhersagen bestehen.
 $maxZeitraum = Vorhersage::getMaxZeitraum();
@@ -26,5 +28,6 @@ echo $twig->render('admin.twig', array(
     'msg' => @$_GET['msg'],
     'zeitraum' => $vorhersage->getZeitraum(),
     'vorhersage' => $vorhersage->getBauteils(),
-    'maxZeitraum' => $maxZeitraum
+    'maxZeitraum' => $maxZeitraum,
+    'assos' => Assoziation::getInstance()->getAssos()
 ));
