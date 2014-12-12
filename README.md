@@ -5,6 +5,20 @@ BWL2 Praktikum
 
 - - - 
 
+Installation
+----
+1. Einen MySQL nutzer "bai3-bwl" und eine Datenbank "bai3-bwl" anlegen.
+2. doc/bai3-bwl.sql in der Datenbank bai3-bwl ausführen (per PhpMyAdmin).
+3. local.php anlegen mit dem Inhalt:<br />
+```php
+    <?php
+    return array(
+        'user' => 'bai3-bwl',
+        'pass' => '<passwort von bai3-bwl>',
+    );
+    ?>
+```
+
 TWIG
 ----
 Dieses Projekt benutzt (und beinhaltet) TWIG.
@@ -23,3 +37,4 @@ Aufbau
     * <b>Produkt.php</b> ist fuer die Produktverwaltung und Bauteilverwaltung verantwortlich.
     * <b>Warenkorb.php</b> ist fuer die Warenkorbsverwaltung und die Bestellung (inklusieve Rechnung) verantwortlich.
     * <b>Vorhersage.php</b> ist fuer administrative Aufgaben verantwortlich. Insbesondere die Primärbedarfsanalyse.
+    * <b>Assoziation.php</b> ist fuer die Assoziationsanalyse verantwortlich.
